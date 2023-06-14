@@ -28,20 +28,22 @@ const Post = ({ data }) => {
 
         <div className={styles.widget_wrapper}>
           <div className="#">{135 + isLiked}</div>
-          <button onClick={
-            () => {
-              if(isLiked) setLiked(0)
+          <img
+            src='../../../../public/img/laick.png'
+            onClick={
+              () => {
+                if (isLiked) setLiked(0)
 
-              else(setLiked(1))
+                else (setLiked(1))
 
-              
-            }
-          }>l</button>
+
+              }
+            } />
         </div>
 
         <div className={styles.widget_wrapper}>
           <div className="#">2</div>
-          <button>d</button>
+          <button>c</button>
         </div>
 
         <div className={styles.widget_wrapper}>

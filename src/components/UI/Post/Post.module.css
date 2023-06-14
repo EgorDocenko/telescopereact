@@ -11,7 +11,7 @@
 .header_post{
     height: 85%;
     width: 100%;
-    background-color: rgb(1, 1, 75);
+    background: radial-gradient(180.7% 59.37% at 50% 50%, #343E62 0%, #090E20 100%);
     border-radius: inherit;
     display: flex;
     flex-direction: column;
