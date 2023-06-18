@@ -18,11 +18,10 @@ const Post = ({ data }) => {
           {body}
 
         </div>
-
       </div>
       <div className={styles.footer_post}>
         <div className={styles.widget_wrapper}>
-          <div className="#">10</div>
+          <div className="#">5</div>
           <button>r</button>
         </div>
 
@@ -33,10 +32,7 @@ const Post = ({ data }) => {
             onClick={
               () => {
                 if (isLiked) setLiked(0)
-
                 else (setLiked(1))
-
-
               }
             } />
         </div>
@@ -55,5 +51,4 @@ const Post = ({ data }) => {
     </div>
   )
 }
-
 export default Post
