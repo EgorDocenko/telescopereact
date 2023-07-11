@@ -9,15 +9,18 @@ const Post = ({ data }) => {
   const commendBlock = <div className={styles.commend_block}>
     {comments.map(
       (item, index) => {
-        const key = Object.keys(item)[0];
-        const value = item[key];
+        const name = Object.keys(item)[0];
+        const text = item[name];
+        const isLongText = text.length > 100;
+        const visibleText = isLongText ? text.slice(0, 100) + '...' : text;
+        const showMore = <a>Показать больше</a>
 
         return (
           <div key={index} className={styles.oneComment}>
-            <img src="db/users/avatars/Костя.jpeg" alt="Аватар коментатора" />
+            <img src={`db/users/avatars/${name}.jpeg`} alt="Аватар комментатора" />
             <div className="right_block">
-              <h1>{key}</h1>
-              <p>{value}</p>
+              <h1>{name}</h1>
+              <p>{visibleText} {isLongText && showMore}</p>
             </div>
           </div>
         );
