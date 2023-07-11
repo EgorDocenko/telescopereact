@@ -1,53 +1,123 @@
 import React, { useState } from 'react'
 import styles from './Post.module.css'
 const Post = ({ data }) => {
-  const { id, title, body, isHaveImg, like, reposts, isCommented, disLikes } = data;
-  const [isLiked, setLiked] = useState(0)
+
+  const { id, title, body, isHaveImg, like, reposts, isCommented, dislike, amountComments, comments } = data;
+  const [isLiked, setLiked] = useState(0);
+  const [isDislike, setDislike] = useState(0);
+  const [hasCommented, setCommented] = useState(false);
+  const commendBlock = <div className={styles.commend_block}>
+    {comments.map(
+      (item, index) => {
+        const key = Object.keys(item)[0];
+        const value = item[key];
+
+        return (
+          <div key={index} className={styles.oneComment}>
+            <img src="db/users/avatars/Костя.jpeg" alt="Аватар коментатора" />
+            <div className="right_block">
+              <h1>{key}</h1>
+              <p>{value}</p>
+            </div>
+          </div>
+        );
+
+      }
+    )}
+  </div>;
+
+
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header_post}>
+      <div className={styles.inner_wrapper}>
+        <div className={styles.header_post}>
 
-        <div className={styles.title}>
+          <div className={styles.title}>
 
-          {title}
+            {title}
 
+          </div>
+
+          <div className={styles.body}>
+
+            {body}
+
+          </div>
         </div>
+        <div className={styles.footer_post}>
 
-        <div className={styles.body}>
 
-          {body}
+          <div className={styles.widget_wrapper}>
+            <div className="#">{reposts}</div>
+            <img alt='репост'
+              src='img/repost.png'
+              onClick={
+                () => {
+                  alert("появится понель репостов")
+                }
+              } />
+
+
+          </div>
+
+          <div className={styles.widget_wrapper}>
+            <div className="#">{dislike + isDislike}</div>
+            <img alt='дизлайк'
+              src='img/dislike.png'
+              onClick={
+                () => {
+                  if (isDislike) setDislike(0)
+                  else {
+                    setDislike(1);
+                    setLiked(0)
+                  }
+                }
+              } />
+
+
+          </div>
+
+          <div className={styles.widget_wrapper}>
+            <div className="#">{like + isLiked}</div>
+            <img alt='лайк'
+              src='img/like.png'
+              onClick={
+                () => {
+                  if (isLiked) setLiked(0)
+                  else {
+                    setLiked(1);
+                    setDislike(0);
+
+                  }
+                }
+              } />
+
+
+          </div>
+
+          <div className={styles.widget_wrapper}>
+            <div className="#">{amountComments}</div>
+            <img alt='коммент'
+              src='img/comment.png'
+              onClick={
+                () => {
+                  setCommented(!hasCommented);
+                }
+              } />
+
+
+          </div>
 
         </div>
       </div>
-      <div className={styles.footer_post}>
-        <div className={styles.widget_wrapper}>
-          <div className="#">5</div>
-          <button>r</button>
-        </div>
+      {hasCommented
+        ? comments.length > 0
+          ? commendBlock
+          : 'Комментариев нету'
+        : ''
 
-        <div className={styles.widget_wrapper}>
-          <div className="#">{135 + isLiked}</div>
-          <img
-            src='../../../../public/img/laick.png'
-            onClick={
-              () => {
-                if (isLiked) setLiked(0)
-                else (setLiked(1))
-              }
-            } />
-        </div>
+      }
 
-        <div className={styles.widget_wrapper}>
-          <div className="#">2</div>
-          <button>c</button>
-        </div>
-
-        <div className={styles.widget_wrapper}>
-          <div className="#">65</div>
-          <button>c</button>
-        </div>
-
-      </div>
     </div>
   )
 }
