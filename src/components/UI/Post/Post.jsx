@@ -1,38 +1,63 @@
 import React, { useState } from 'react'
 import styles from './Post.module.css'
+
+
+
+const Comment = ({ item, index }) => {
+  const [openComment,setOpenComment] = useState(false)
+  const name = Object.keys(item)[0];
+  const text = item[name];
+  const isLongText = text.length > 70;
+  const visibleText = isLongText ? text.slice(0, 70) + '...' : text;
+  const showMore = <a>Показать больше</a>
+
+  return (
+    <div key={index} className={styles.oneComment}>
+      <img src={`db/users/avatars/${name}.jpeg`} alt="Аватар комментатора" />
+      <div className="right_block">
+        <h1>{name}</h1>
+        <p>{openComment
+        ?text
+        :`${visibleText} ${isLongText && showMore}`}</p>
+      </div>
+    </div>
+  );
+
+}
+
+
+
+
 const Post = ({ data }) => {
 
   const { id, title, body, isHaveImg, like, reposts, isCommented, dislike, amountComments, comments } = data;
   const [isLiked, setLiked] = useState(0);
   const [isDislike, setDislike] = useState(0);
   const [hasCommented, setCommented] = useState(false);
-  const commendBlock = <div className={styles.commend_block}>
+  const [commentedVisible, setCommentedVisible] = useState(false);
+  const commendBlock = <div
+    className={styles.commend_block}
+    style={{
+
+      left: commentedVisible && "26.8vw"
+
+    }}
+  >
     {comments.map(
-      (item, index) => {
-        const name = Object.keys(item)[0];
-        const text = item[name];
-        const isLongText = text.length > 100;
-        const visibleText = isLongText ? text.slice(0, 100) + '...' : text;
-        const showMore = <a>Показать больше</a>
-
-        return (
-          <div key={index} className={styles.oneComment}>
-            <img src={`db/users/avatars/${name}.jpeg`} alt="Аватар комментатора" />
-            <div className="right_block">
-              <h1>{name}</h1>
-              <p>{visibleText} {isLongText && showMore}</p>
-            </div>
-          </div>
-        );
-
-      }
+      (item, index) => <Comment item={item} index = {index}/>
+      
     )}
   </div>;
 
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.inner_wrapper}>
+      <div
+        className={styles.inner_wrapper}
+        style={{
+          borderRadius: commentedVisible && "15px 0px 0px 0px"
+        }}
+      >
         <div className={styles.header_post}>
 
           <div className={styles.title}>
@@ -104,7 +129,21 @@ const Post = ({ data }) => {
               src='img/comment.png'
               onClick={
                 () => {
-                  setCommented(!hasCommented);
+                  if (hasCommented) {
+                    setCommentedVisible(false);
+                    setTimeout(
+                      () => {
+                        setCommented(false);
+                      }, 300
+                    )
+                  } else {
+                    setCommented(true);
+                    setTimeout(
+                      () => {
+                        setCommentedVisible(true);
+                      }, 100
+                    )
+                  }
                 }
               } />
 
@@ -113,11 +152,10 @@ const Post = ({ data }) => {
 
         </div>
       </div>
-      {hasCommented
-        ? comments.length > 0
-          ? commendBlock
-          : 'Комментариев нету'
-        : ''
+
+      {
+
+        hasCommented && commendBlock
 
       }
 
