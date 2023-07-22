@@ -4,21 +4,38 @@ import styles from './Post.module.css'
 
 
 const Comment = ({ item, index }) => {
-  const [openComment,setOpenComment] = useState(false)
+
+  const [handdeComment, setHanddeComment] = useState(false);
+
   const name = Object.keys(item)[0];
   const text = item[name];
   const isLongText = text.length > 70;
-  const visibleText = isLongText ? text.slice(0, 70) + '...' : text;
-  const showMore = <a>Показать больше</a>
+  const visibleText = isLongText ? text.slice(0, 67) + '...' : text;
+
+
+  const showAll = (e) => {
+    e.preventDefault();
+    setHanddeComment(true);
+  }
+
+  const showMore = <a onClick={showAll} className={styles.show_more_link}>Показать больше</a>
 
   return (
-    <div key={index} className={styles.oneComment}>
+    <div
+      key={index}
+      className={styles.oneComment}
+      style = {{
+        height:handdeComment ? 'auto' : ' '
+      }}
+    >
       <img src={`db/users/avatars/${name}.jpeg`} alt="Аватар комментатора" />
       <div className="right_block">
         <h1>{name}</h1>
-        <p>{openComment
-        ?text
-        :`${visibleText} ${isLongText && showMore}`}</p>
+        <p>{handdeComment
+          ? text
+          : <>
+            {visibleText}{isLongText && showMore}
+          </>}</p>
       </div>
     </div>
   );
@@ -44,8 +61,8 @@ const Post = ({ data }) => {
     }}
   >
     {comments.map(
-      (item, index) => <Comment item={item} index = {index}/>
-      
+      (item, index) => <Comment item={item} index={index} />
+
     )}
   </div>;
 
