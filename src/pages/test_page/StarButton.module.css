@@ -1,0 +1,9 @@
+.StarButton {
+    background-color: black;
+    color: rgb(0, 128, 117);
+    justify-content: center;
+    width: 8vw;
+    height: 8vh;
+    border-radius: 1em;
+
+}

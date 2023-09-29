@@ -1,0 +1,27 @@
+.wrapper{
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(23, 57, 100);
+    color: rgba(240, 255, 255, 0.849);
+    align-items: center;
+}
+
+.wrapper > h1{
+    align-self: center;
+    margin-top: 3vh;
+}
+
+.wrapper > p{
+    padding: 2em;
+    text-indent: 2em;
+    text-align: justify;
+}
+
+.buttons{
+    width: 60vw;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
